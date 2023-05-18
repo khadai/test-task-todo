@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface State {
     list: string[];
@@ -17,9 +17,9 @@ const todoSlice = createSlice({
                 ...initialState,
             };
         },
-    }
+    },
 });
 
-export const {resetState} = todoSlice.actions;
+export const { resetState } = todoSlice.actions;
 
 export default todoSlice.reducer;
