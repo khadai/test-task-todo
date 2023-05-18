@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, FormControl, TextField } from '@mui/material';
+import { Box, Button, FormControl, Stack, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { addToDoItem } from '../redux/slice';
 
@@ -33,37 +33,44 @@ const Component = ({ className }: Props) => {
         <div className={className}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormControl fullWidth variant="outlined" className="form">
-                    <Controller
-                        name="title"
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                id="title"
-                                size="small"
-                                placeholder="Your task"
-                                label="Your task"
-                                helperText={fieldsErrors.title ? fieldsErrors.title.message : undefined}
-                                error={Boolean(fieldsErrors.title)}
-                                {...register('title')}
-                            />
-                        )}
-                        control={control}
-                        rules={{
-                            required: 'Task name required',
-                            minLength: {
-                                value: 2,
-                                message: 'Task name is too short',
-                            },
-                        }}
-                    />
+                    <Stack direction="row" spacing={1}>
+                        <Controller
+                            name="title"
+                            render={({ field }) => (
+                                <TextField
+                                    {...field}
+                                    id="title"
+                                    size="small"
+                                    placeholder="Your task"
+                                    label="Your task"
+                                    fullWidth
+                                    helperText={fieldsErrors.title ? fieldsErrors.title.message : undefined}
+                                    error={Boolean(fieldsErrors.title)}
+                                    {...register('title')}
+                                />
+                            )}
+                            control={control}
+                            rules={{
+                                required: 'Task name required',
+                                minLength: {
+                                    value: 2,
+                                    message: 'Task name is too short',
+                                },
+                            }}
+                        />
 
-                    <Button variant="outlined" color="primary" type="submit">
-                        Add
-                    </Button>
+                        <Button variant="outlined" color="primary" type="submit" className="add-btn">
+                            Add
+                        </Button>
+                    </Stack>
                 </FormControl>
             </form>
         </div>
     );
 };
 
-export default styled(Component)``;
+export default styled(Component)`
+    .add-btn {
+        width: 120px;
+    }
+`;

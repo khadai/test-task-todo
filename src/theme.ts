@@ -9,9 +9,24 @@ let theme = createTheme({
     typography: {
         button: {
             textTransform: 'none',
+            fontWeight: 400,
         },
     },
 });
+
+theme.components = {
+    ...theme.components,
+    MuiButton: {
+        styleOverrides: {
+            outlined: {
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.main,
+                    color: theme.palette.common.white,
+                },
+            },
+        },
+    },
+};
 
 theme = responsiveFontSizes(theme);
 

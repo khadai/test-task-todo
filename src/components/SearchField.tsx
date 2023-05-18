@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Controller, useForm } from 'react-hook-form';
-import { Button, FormControl, TextField } from '@mui/material';
+import { FormControl, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { addToDoItem } from '../redux/slice';
 
@@ -30,32 +30,33 @@ const Component = ({ className }: Props) => {
         reset();
     };
     return (
-        <div className={className}>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <FormControl fullWidth variant="outlined" className="form">
-                    <Controller
-                        name="title"
-                        render={({ field }) => (
-                            <TextField
-                                {...field}
-                                id="title"
-                                size="small"
-                                placeholder="Search by text..."
-                                label="Search"
-                                helperText={fieldsErrors.title ? fieldsErrors.title.message : undefined}
-                                error={Boolean(fieldsErrors.title)}
-                                {...register('title')}
-                            />
-                        )}
-                        control={control}
-                        rules={{
-                            required: 'Task name required',
-                        }}
-                    />
-                </FormControl>
-            </form>
-        </div>
+        <form className={className} onSubmit={handleSubmit(onSubmit)}>
+            <FormControl fullWidth variant="outlined">
+                <Controller
+                    name="title"
+                    render={({ field }) => (
+                        <TextField
+                            {...field}
+                            id="title"
+                            size="small"
+                            placeholder="Search by text..."
+                            // label="Search"
+                            fullWidth
+                            helperText={fieldsErrors.title ? fieldsErrors.title.message : undefined}
+                            error={Boolean(fieldsErrors.title)}
+                            {...register('title')}
+                        />
+                    )}
+                    control={control}
+                    rules={{
+                        required: 'Task name required',
+                    }}
+                />
+            </FormControl>
+        </form>
     );
 };
 
-export default styled(Component)``;
+export default styled(Component)`
+    width: 100%;
+`;
