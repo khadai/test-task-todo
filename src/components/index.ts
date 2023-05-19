@@ -1,6 +1,7 @@
 import ToDoListItem from './ToDoListItem';
-import AddListItem from './AddListItem';
+import AddTask from './AddTask';
 import DeleteDialog from './DeleteDialog';
 import SearchField from './SearchField';
+import FilterButtons from './FilterButtons';
 
-export { ToDoListItem, AddListItem, DeleteDialog, SearchField };
+export { ToDoListItem, AddTask, DeleteDialog, SearchField, FilterButtons };

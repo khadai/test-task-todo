@@ -9,14 +9,13 @@ interface State {
 
 const initialState: State = {
     toDoList: [
-        { title: '111', active: true, id: '961722c3' },
-        { title: '222', active: false, id: 'a3ccded7' },
+        { title: 'Smile', active: true, id: 'a3ccded7' },
+        { title: 'Finish test task', active: false, id: '961722c3' },
     ],
     filter: 'all',
     searchValue: '',
 };
-//TODO: fix this ts-ignore
-// @ts-ignore
+
 const todoSlice = createSlice({
     name: 'todo',
     initialState,
@@ -39,7 +38,6 @@ const todoSlice = createSlice({
                 toDoList: initialState.toDoList,
             };
         },
-        // @ts-ignore
         toggleActiveStatus: (state, action: PayloadAction<{ id: string }>) => {
             const task = state.toDoList.find(({ id }) => id === action.payload.id);
             if (task!.active) {
@@ -48,7 +46,7 @@ const todoSlice = createSlice({
                     toDoList: [
                         ...state.toDoList.filter(({ id }) => id !== action.payload.id),
                         {
-                            ...task,
+                            ...(task as Task),
                             active: !task!.active,
                         },
                     ],
@@ -58,7 +56,7 @@ const todoSlice = createSlice({
                 ...state,
                 toDoList: [
                     {
-                        ...task,
+                        ...(task as Task),
                         active: !task!.active,
                     },
                     ...state.toDoList.filter(({ id }) => id !== action.payload.id),
@@ -85,7 +83,6 @@ const todoSlice = createSlice({
     },
 });
 
-export const { resetState, addToDoItem, removeToDoItem, resetList, toggleActiveStatus, setFilter, setSearchValue } =
-    todoSlice.actions;
+export const { addToDoItem, removeToDoItem, toggleActiveStatus, setFilter, setSearchValue } = todoSlice.actions;
 
 export default todoSlice.reducer;
