@@ -27,6 +27,12 @@ const Component = ({ className, title, id, active }: Props) => {
         dispatch(toggleActiveStatus({ id }));
     };
 
+    const handleDialogOpen = () => {
+        if (isHovered) {
+            setOpenDialog(true);
+        }
+    };
+
     return (
         <div className={className}>
             <ListItem
@@ -35,21 +41,18 @@ const Component = ({ className, title, id, active }: Props) => {
                         edge="end"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
+                        onClick={handleDialogOpen}
                     >
-                        {isHovered ? (
-                            <DeleteForeverOutlined color="error" onClick={() => setOpenDialog(true)} />
-                        ) : (
-                            <MoreVertRounded />
-                        )}
+                        {isHovered ? <DeleteForeverOutlined color="error" /> : <MoreVertRounded />}
                     </IconButton>
                 }
                 disablePadding
             >
                 <ListItemButton role={undefined} onClick={handleCheckbox} dense>
                     <ListItemIcon>
-                        <Checkbox edge="start" checked={active} disableRipple />
+                        <Checkbox edge="start" checked={!active} disableRipple />
                     </ListItemIcon>
-                    <ListItemText primary={<Typography className={active ? 'done-task' : ''}>{title}</Typography>} />
+                    <ListItemText primary={<Typography className={active ? '' : 'done-task'}>{title}</Typography>} />
                 </ListItemButton>
             </ListItem>
             <DeleteDialog open={openDialog} onClose={handleClose} taskId={id} />

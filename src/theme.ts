@@ -24,6 +24,9 @@ theme.components = {
                     color: theme.palette.common.white,
                 },
             },
+            contained: {
+                color: theme.palette.common.white,
+            },
         },
     },
 };

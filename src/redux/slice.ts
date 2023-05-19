@@ -3,6 +3,7 @@ import { Task } from '../types/Task';
 
 interface State {
     toDoList: Task[];
+    filter: 'all' | 'done';
 }
 
 const initialState: State = {
@@ -12,6 +13,7 @@ const initialState: State = {
         { title: '333', active: true, id: '3' },
         { title: '44444', active: false, id: '4' },
     ],
+    filter: 'all',
 };
 //TODO: fix this ts-ignore, add unique ID
 // @ts-ignore
@@ -68,9 +70,15 @@ const todoSlice = createSlice({
                 ...initialState,
             };
         },
+        setFilter: (state, action: PayloadAction<{ filter: 'all' | 'done' }>) => {
+            return {
+                ...state,
+                filter: action.payload.filter,
+            };
+        },
     },
 });
 
-export const { resetState, addToDoItem, removeToDoItem, resetList, toggleActiveStatus } = todoSlice.actions;
+export const { resetState, addToDoItem, removeToDoItem, resetList, toggleActiveStatus, setFilter } = todoSlice.actions;
 
 export default todoSlice.reducer;
