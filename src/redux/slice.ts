@@ -4,18 +4,18 @@ import { Task } from '../types/Task';
 interface State {
     toDoList: Task[];
     filter: 'all' | 'done';
+    searchValue: string;
 }
 
 const initialState: State = {
     toDoList: [
-        { title: '111', active: true, id: '0' },
-        { title: '222', active: false, id: '1' },
-        { title: '333', active: true, id: '3' },
-        { title: '44444', active: false, id: '4' },
+        { title: '111', active: true, id: '961722c3' },
+        { title: '222', active: false, id: 'a3ccded7' },
     ],
     filter: 'all',
+    searchValue: '',
 };
-//TODO: fix this ts-ignore, add unique ID
+//TODO: fix this ts-ignore
 // @ts-ignore
 const todoSlice = createSlice({
     name: 'todo',
@@ -46,22 +46,22 @@ const todoSlice = createSlice({
                 return {
                     ...state,
                     toDoList: [
+                        ...state.toDoList.filter(({ id }) => id !== action.payload.id),
                         {
                             ...task,
                             active: !task!.active,
                         },
-                        ...state.toDoList.filter(({ id }) => id !== action.payload.id),
                     ],
                 };
             }
             return {
                 ...state,
                 toDoList: [
-                    ...state.toDoList.filter(({ id }) => id !== action.payload.id),
                     {
                         ...task,
                         active: !task!.active,
                     },
+                    ...state.toDoList.filter(({ id }) => id !== action.payload.id),
                 ],
             };
         },
@@ -76,9 +76,16 @@ const todoSlice = createSlice({
                 filter: action.payload.filter,
             };
         },
+        setSearchValue: (state, action: PayloadAction<{ searchValue: string }>) => {
+            return {
+                ...state,
+                searchValue: action.payload.searchValue,
+            };
+        },
     },
 });
 
-export const { resetState, addToDoItem, removeToDoItem, resetList, toggleActiveStatus, setFilter } = todoSlice.actions;
+export const { resetState, addToDoItem, removeToDoItem, resetList, toggleActiveStatus, setFilter, setSearchValue } =
+    todoSlice.actions;
 
 export default todoSlice.reducer;

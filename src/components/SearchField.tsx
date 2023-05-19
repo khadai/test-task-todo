@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Controller, useForm } from 'react-hook-form';
 import { FormControl, TextField } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { addToDoItem } from '../redux/slice';
+import { setSearchValue } from '../redux/slice';
 
 interface Props {
     className?: string;
@@ -12,48 +12,34 @@ interface Props {
 const Component = ({ className }: Props) => {
     const dispatch = useDispatch();
 
-    const {
-        register,
-        handleSubmit,
-        control,
-        reset,
-        formState: { errors: fieldsErrors },
-    } = useForm<{ title: string }>({
+    const { register, control, watch } = useForm<{ searchValue: string }>({
         defaultValues: {
-            title: '',
+            searchValue: '',
         },
     });
 
-    const onSubmit = (data: { title: string }) => {
-        console.log(data);
-        dispatch(addToDoItem({ title: data.title, id: '2', active: true }));
-        reset();
-    };
+    const searchValue = watch('searchValue');
+
+    useEffect(() => {
+        dispatch(setSearchValue({ searchValue }));
+    }, [searchValue]);
+
     return (
-        <form className={className} onSubmit={handleSubmit(onSubmit)}>
-            <FormControl fullWidth variant="outlined">
-                <Controller
-                    name="title"
-                    render={({ field }) => (
-                        <TextField
-                            {...field}
-                            id="title"
-                            size="small"
-                            placeholder="Search by text..."
-                            // label="Search"
-                            fullWidth
-                            helperText={fieldsErrors.title ? fieldsErrors.title.message : undefined}
-                            error={Boolean(fieldsErrors.title)}
-                            {...register('title')}
-                        />
-                    )}
-                    control={control}
-                    rules={{
-                        required: 'Task name required',
-                    }}
-                />
-            </FormControl>
-        </form>
+        <FormControl fullWidth variant="outlined" className={className}>
+            <Controller
+                name="searchValue"
+                render={({ field }) => (
+                    <TextField
+                        {...field}
+                        size="small"
+                        placeholder="Search by text..."
+                        fullWidth
+                        {...register('searchValue')}
+                    />
+                )}
+                control={control}
+            />
+        </FormControl>
     );
 };
 
