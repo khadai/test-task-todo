@@ -52,7 +52,13 @@ const Component = ({ className, title, id, active }: Props) => {
                     <ListItemIcon>
                         <Checkbox edge="start" checked={!active} disableRipple />
                     </ListItemIcon>
-                    <ListItemText primary={<Typography className={active ? '' : 'done-task'}>{title}</Typography>} />
+                    <ListItemText
+                        primary={
+                            <Typography className={active ? '' : 'done-task'} noWrap>
+                                {title}
+                            </Typography>
+                        }
+                    />
                 </ListItemButton>
             </ListItem>
             <DeleteDialog open={openDialog} onClose={handleClose} taskId={id} />

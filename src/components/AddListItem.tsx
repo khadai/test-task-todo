@@ -26,12 +26,8 @@ const Component = ({ className }: Props) => {
     });
 
     const onSubmit = (data: { title: string }) => {
-        console.log(data);
-        const unique_id = uuid();
-        const smallId = unique_id.slice(0, 8);
-        console.log(smallId);
-
-        dispatch(addToDoItem({ title: data.title, id: smallId, active: true }));
+        const newId = uuid().slice(0, 8);
+        dispatch(addToDoItem({ title: data.title, id: newId, active: true }));
         reset();
     };
     return (
@@ -45,8 +41,8 @@ const Component = ({ className }: Props) => {
                                 {...field}
                                 id="title"
                                 size="small"
-                                placeholder="Your task"
                                 label="Your task"
+                                placeholder="Write your checklist text here"
                                 fullWidth
                                 helperText={fieldsErrors.title ? fieldsErrors.title.message : undefined}
                                 error={Boolean(fieldsErrors.title)}
@@ -62,7 +58,6 @@ const Component = ({ className }: Props) => {
                             },
                         }}
                     />
-
                     <Button variant="outlined" color="primary" type="submit" className="add-btn">
                         Add
                     </Button>
